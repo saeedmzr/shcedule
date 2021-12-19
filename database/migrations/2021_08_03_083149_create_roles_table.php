@@ -19,6 +19,8 @@ class CreateRolesTable extends Migration {
 
         Role::insert([['title' => 'Admin'], ['title' => 'User']]);
 
+
+
     }
 
     /**

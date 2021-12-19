@@ -22,93 +22,54 @@
 <body>
 
 
-    <div class="login">
+<div class="login">
+    <div class="loginform">
+        <div class="r-loginform">
+            <div class="title-form">
+                <strong>Login</strong>
+            </div>
+            <!--title-form-->
+            <form action="{{Url('loginAdmin')}}" method="post">
+                @csrf
 
 
-        <div class="loginform">
-
-            <div class="r-loginform">
-
-
-                <div class="title-form">
-
-
-                    <strong>Login</strong>
-
-
-                </div>
-                <!--title-form-->
-
-
-                <form action="{{Url('loginAdmin')}}" method="post">
-
-
-                    @csrf
-
-
-
-
-
-                    <input type="text" placeholder="Email" name="email" id="username">
-
-
-                    <input type="password" placeholder="Password" name="password" id="password">
-
-
-                    <input type="submit" value="Sign In">
-
-                    @if($errors->any())
+                <input type="text" placeholder="Email" name="email" id="username">
+                <input type="password" placeholder="Password" name="password" id="password">
+                <input type="submit" value="Sign In">
+                @if($errors->any())
                     <ul>
                         @foreach($errors->all() as $error)
-
-                        <li class="alert alert-danger">{{$error}}</li>
+                            <li class="alert alert-danger">{{$error}}</li>
                         @endforeach
                     </ul>
-                    @endif
-                    @if(session()->has('error'))
+                @endif
+                @if(session()->has('error'))
                     <div class="alert alert-danger">{{session('error')}}</div>
-                    @endif
-                </form>
-            </div>
-            <!--r-loginform-->
+                @endif
+            </form>
         </div>
-
+        <!--r-loginform-->
     </div>
 
-    <div class="shadow"></div>
+</div>
+
+<div class="shadow"></div>
 </body>
 
 </html>
 
 <style>
     html {
-
-
         height: 100%
     }
-
-
-
     .alert {
         color: black;
     }
-
     ::-moz-selection {
-
-
         background: #fe57a1;
-
-
         color: #fff;
-
-
         text-shadow: none;
-
-
     }
-
-
-
 
 
     ::selection {
@@ -126,9 +87,6 @@
     }
 
 
-
-
-
     body {
 
 
@@ -137,9 +95,6 @@
 
 
     }
-
-
-
 
 
     .login,
@@ -162,9 +117,6 @@
 
 
     }
-
-
-
 
 
     .login h1 {
@@ -209,12 +161,7 @@
     }
 
 
-
-
-
     input[type="password"],
-
-
     input[type="text"] {
 
 
@@ -254,12 +201,7 @@
     }
 
 
-
-
-
     input[type="password"]:focus,
-
-
     input[type="text"]:focus {
 
 
@@ -270,9 +212,6 @@
 
 
     }
-
-
-
 
 
     .show-password {
@@ -291,9 +230,6 @@
 
 
     }
-
-
-
 
 
     input[type="checkbox"] {
@@ -317,9 +253,6 @@
     }
 
 
-
-
-
     input[type="checkbox"]:checked {
 
 
@@ -330,9 +263,6 @@
 
 
     }
-
-
-
 
 
     .toggle {
@@ -359,21 +289,11 @@
     }
 
 
-
-
-
-    input[type="checkbox"]:checked+.toggle {
+    input[type="checkbox"]:checked + .toggle {
 
 
         background-position: 0 -16px
     }
-
-
-
-
-
-
-
 
 
     input[type="submit"] {
@@ -448,9 +368,6 @@
     }
 
 
-
-
-
     .shadow {
 
 
@@ -478,9 +395,6 @@
     }
 
 
-
-
-
     input[type="submit"]:active {
 
 
@@ -506,42 +420,29 @@
         background: url('http://techno.test-web.ir/AdminLTE/dist/img/welcome.jpg') no-repeat;
         background-size: cover;
     }
-
-
     .l-loginform p {
         color: #fff;
     }
-
-
     .r-loginform {
         text-align: center;
     }
-
-
     .l-loginform img {
         margin-top: 40px;
         max-height: 140px;
     }
-
-
     .top-loginform {
         border-bottom: 1px solid #ddd;
         width: 80%;
         margin: 0 auto;
         padding-bottom: 30px;
     }
-
-
     .title-form {
         margin: 30px 0;
     }
-
-
     .title-form strong {
         font-size: 24px;
         color: #001f70;
     }
-
 
     span.forgetpass,
     span.login-sp {

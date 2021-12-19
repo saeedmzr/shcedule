@@ -15,5 +15,15 @@ class TaskRepository extends \App\Repositories\BaseRepository
     {
         $this->model = $model;
     }
+    public function updateStatus(int $id)
+    {
+        $task =  $this->findById($id) ;
+        if ($task) {
+            $task->status ? $task->status = false : $task->status = true;
+            $task->save();
+            return $task->status ;
+        }
+        return false ;
+    }
 
 }

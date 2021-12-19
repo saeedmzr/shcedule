@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\BaseRepository;
+use App\Repositories\BaseRepositoryInterface;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\Task\TaskRepository;
@@ -29,8 +31,9 @@ class RepositoryPatternProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(UserRepository::class , UserRepositoryInterface::class) ;
-        $this->app->bind(TaskRepository::class , TaskRepositoryInterface::class);
-        $this->app->bind(RoleRepository::class , RoleRepositoryInterface::class);
+        $this->app->bind(UserRepositoryInterface::class , UserRepository::class) ;
+//        $this->app->bind(BaseRepository::class , BaseRepositoryInterface::class) ;
+        $this->app->bind(TaskRepositoryInterface::class , TaskRepository::class);
+        $this->app->bind(RoleRepositoryInterface::class , RoleRepository::class);
     }
 }

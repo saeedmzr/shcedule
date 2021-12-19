@@ -19,14 +19,16 @@ class AuthController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-
     // admin login
     public function login(LoginRequest $request)
     {
         $admin_login = $this->userRepository->LoginAdminByEmail($request->email, $request->password);
-        if ($admin_login['result'] == true) Auth::loginUsingId($admin['admin']);
-        return new LoginResource(['message' => $admin_login['message'], 'status_code' => $admin_login['status_code']]);
-
+        if ($admin_login['result'] == true)
+        {
+            Auth::loginUsingId($admin_login['admin']->id);
+            return redirect()->route('admin.dashboard') ;
+        }
+        return back()->withErrors(['message' =>  $admin_login['message'] ]) ;
     }
 
 // logout
@@ -34,7 +36,6 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('admin.login');
-
     }
 // login panel admin landing page
     public function loginPage()
