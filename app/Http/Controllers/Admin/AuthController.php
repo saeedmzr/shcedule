@@ -3,62 +3,42 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LoginRequest;
+use App\Http\Resources\Admin\LoginResource;
 use App\Models\User;
+use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
     // admin login
-    public function login(Request $request) {
-
-        // validate admin info
-        $validator = Validator::make($request->all(), [
-
-            'email' => 'required',
-
-            'password' => 'required',
-
-        ]);
-
-        if ($validator->fails()) {
-
-            return back()->withErrors($validator);
-
-        }
-// get admin if validation was ok
-        $admin = User::where([
-
-            'email' => $request->email,
-
-        ])->first();
-// check if this user has access to panel admin
-
-        if ($admin && $admin->hasRole('Admin')) {
-
-            Auth::loginUsingId($admin->id);
-
-            return redirect()->route('admin.dashboard');
-
-        }
-
-        return back()->with(['error' => "You are not an admin."]);
+    public function login(LoginRequest $request)
+    {
+        $admin_login = $this->userRepository->LoginAdminByEmail($request->email, $request->password);
+        if ($admin_login['result'] == true) Auth::loginUsingId($admin['admin']);
+        return new LoginResource(['message' => $admin_login['message'], 'status_code' => $admin_login['status_code']]);
 
     }
+
 // logout
-    public function logout() {
-
+    public function logout()
+    {
         Auth::logout();
-
         return redirect()->route('admin.login');
 
     }
 // login panel admin landing page
-    public function loginPage() {
-
+    public function loginPage()
+    {
         return view('admin.login');
-
     }
-
 }
