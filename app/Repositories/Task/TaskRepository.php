@@ -26,4 +26,10 @@ class TaskRepository extends \App\Repositories\BaseRepository
         return false ;
     }
 
+    public function checkUserAlreadyHasTaskOnThatDate(User $user , $date)
+    {
+        $task = $user->tasks()->where('reserved_at', $date)->first();
+        return $task  ;
+    }
+
 }
