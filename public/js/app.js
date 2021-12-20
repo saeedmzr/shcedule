@@ -1951,6 +1951,8 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data.result == false) _Services_Notification_Notify_js__WEBPACK_IMPORTED_MODULE_1__.default.error(response.data.message);else {
           _Services_Notification_Notify_js__WEBPACK_IMPORTED_MODULE_1__.default.success(response.data.message);
           _this.isShow = !_this.isShow;
+
+          _this.changeDate();
         }
       })["catch"](function (error) {
         for (var i in error.response.data.errors) {
@@ -1962,7 +1964,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       _Services_Http_HttpService_js__WEBPACK_IMPORTED_MODULE_0__.default.user_post("/api/getEmployees").then(function (response) {
-        _this2.employees = response.data;
+        _this2.employees = response.data.data;
       });
     },
     getUser: function getUser() {

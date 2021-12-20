@@ -104,6 +104,7 @@ export default {
                     else {
                         notify.success(response.data.message);
                         this.isShow = !this.isShow;
+                        this.changeDate() ;
                     }
                 })
                 .catch((error) => {
@@ -113,7 +114,7 @@ export default {
         },
         getEmployees() {
             Http.user_post("/api/getEmployees").then((response) => {
-                this.employees = response.data;
+                this.employees = response.data.data;
             });
         },
         getUser() {

@@ -25,7 +25,7 @@ class TaskController extends Controller {
     // update task status
     public function updateStatus(Request $request) {
 
-        $task = $this->taskRepository->updateIfTaskFoundById($request->id) ;
+        $task = $this->taskRepository->updateStatus($request->id) ;
 
         return response()->json($task);
     }

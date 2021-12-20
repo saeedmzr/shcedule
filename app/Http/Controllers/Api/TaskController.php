@@ -64,7 +64,7 @@ class TaskController extends Controller
 
         $task = $this->taskRepository->createUserTask($user , $request->validated());
 
-        return new SubmitTaskResource(['status_code' => 406, 'data' => $task, 'errors' => [],]);
+        return new SubmitTaskResource(['status_code' => 200, 'data' => $task, 'errors' => [], 'message' => 'your task has been added successfully . ']);
 
     }
 

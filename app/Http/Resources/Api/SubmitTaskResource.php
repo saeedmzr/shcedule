@@ -14,7 +14,8 @@ class SubmitTaskResource extends JsonResource
     {
         return [
             'errors' => $this['errors'],
-            'data' => $this['data']
+            'data' => $this['data'] ,
+            'message' => $this['message']
         ];
     }
 
