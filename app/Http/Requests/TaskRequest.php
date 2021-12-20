@@ -14,7 +14,7 @@ class TaskRequest extends FormRequest {
         return [
             'title' => ["required"],
             'description' => ["required"],
-            'date' => ["required"],
+            'reserved_at' => ["required"],
 
         ];
     }

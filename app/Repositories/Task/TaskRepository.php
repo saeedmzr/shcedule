@@ -3,6 +3,7 @@
 namespace App\Repositories\Task;
 
 use App\Models\Task;
+use App\Models\User;
 
 class TaskRepository extends \App\Repositories\BaseRepository
 {
@@ -30,6 +31,12 @@ class TaskRepository extends \App\Repositories\BaseRepository
     {
         $task = $user->tasks()->where('reserved_at', $date)->first();
         return $task  ;
+    }
+    public function createUserTask(User $user , $data)
+    {
+        $task =  $user->tasks()->create($data) ;
+        return $task ;
+
     }
 
 }

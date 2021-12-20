@@ -19,15 +19,27 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $this->model = $model;
     }
 
+    public function  Login (string  $email , string $password)
+    {
+
+        $user = $this->model->where('email', $email)->first();
+
+        if (!$user ) return ['result' => false , 'message' => 'wrong  information.' ]  ;
+
+        if (!Hash::check( $password  ,$user->password )   ) return ['result' => false , 'message' => 'wrong  information.' ]  ;
+
+        return ['user'=> $user , 'result'=> true , 'message' => 'successfull' ] ;
+
+    }
+
     public function LoginAdminByEmail(string  $email , string $password)
     {
-        $admin = $this->model->where('email', $email)->first();
+        $admin_login_response = $this->Login($email , $password) ;
+        if (!$admin_login_response['result']) return $admin_login_response ;
 
-        if (!$admin ) return ['result' => false , 'message' => 'wrong admin information.' ]  ;
+        if ( !  $admin_login_response['user']->hasRole('Admin'))  return ['result' => false , 'message' => 'you are not an admin.' ]  ;
 
-        if (!Hash::check( $password  ,$admin->password )   ) return ['result' => false , 'message' => 'wrong admin information.' ]  ;
-
-        return ['admin'=> $admin , 'result'=> true , 'message' => 'this use is admin .' ] ;
+        return ['admin'=> $admin_login_response['user'] , 'result'=> true , 'message' => 'this use is admin .' ] ;
 
     }
 

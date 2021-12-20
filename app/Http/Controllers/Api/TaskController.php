@@ -49,7 +49,7 @@ class TaskController extends Controller
         if ($user->hasRole('Admin'))         // admin can see all user's tasks
             $tasks = $this->taskService->allTaskToShowToAdmin($request->date);
         else // user just can see hes own tasks
-            $tasks = $this->taskService->allTaskToShowToAdmin($user, $request->date);
+            $tasks = $this->taskService->userWeekdaysTasks($user, $request->date);
 
         return response()->json(['weekdays' => $weekdays, 'tasks' => $tasks]);
 
@@ -59,10 +59,10 @@ class TaskController extends Controller
     public function submitTask(TaskRequest $request)
     {
         $user = $request->user();
-        $task = $this->taskRepository->checkUserAlreadyHasTaskOnThatDate($user, $request->date);
+        $task = $this->taskRepository->checkUserAlreadyHasTaskOnThatDate($user, $request->reserved_at);
         if ($task) return new SubmitTaskResource(['status_code' => 406, 'data' => '', 'errors' => ["task" => ["this date is already reserved"],]]);
 
-        $task = $this->taskRepository->create($request->validated());
+        $task = $this->taskRepository->createUserTask($user , $request->validated());
 
         return new SubmitTaskResource(['status_code' => 406, 'data' => $task, 'errors' => [],]);
 
