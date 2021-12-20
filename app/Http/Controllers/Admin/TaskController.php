@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller {
 
+    private $taskRepository ;
+    public function __construct(TaskRepository  $taskRepository)
+    {
+        $this->taskRepository = $taskRepository ;
+    }
+
     // get tasks in panel amdin
     public function index() {
 
-        $tasks = Task::filter()->latest()->get();
-
+        $tasks = $this->taskRepository->all() ;
         return view('admin.task.all', compact('tasks'));
 
     }
     // update task status
     public function updateStatus(Request $request) {
 
-        $task = Task::find($request->id);
-        $task->status ? $task->status = false : $task->status = true;
-        $task->save();
+        $task = $this->taskRepository->updateStatus($request->id) ;
 
-        return response()->json($task->status);
+        return response()->json($task);
     }
 }
